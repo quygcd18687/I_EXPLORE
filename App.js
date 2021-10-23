@@ -173,8 +173,9 @@ export default function App() {
       alert('Please enter Reporter Name field!')
     }
     else {
-      var value = 
-        {"property": property,
+      var value =
+      {
+        "property": property,
         "furniture": type,
         "bedroom": bedroom,
         "price": price,
@@ -183,7 +184,7 @@ export default function App() {
         "name": name,
       }
 
-      Alert.alert('Do you want to submit?', 'Data: '+JSON.stringify(value, null, '\t'),
+      Alert.alert('Do you want to submit?', 'Data: ' + JSON.stringify(value, null, '\t'),
         [
 
 
@@ -201,8 +202,8 @@ export default function App() {
           },
         ]
       )
-      
-      
+
+
     }
 
   }
@@ -329,13 +330,8 @@ export default function App() {
         }}>
           <Text > Submit</Text>
         </TouchableOpacity>
+       
 
-
-        {/* <TouchableOpacity style={styles.del} onPress={() => {
-          deleteDataBase(property, bedroom, date, price, type, note, name)
-        }}>
-          <Text >Delete: </Text>
-        </TouchableOpacity> */}
       </ScrollView>
 
 
