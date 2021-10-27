@@ -1,12 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { RadioButton } from 'react-native-paper';
 import 'react-native-gesture-handler';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Stack = createNativeStackNavigator();
-import Detail from './Detail';
 
 
 import {
@@ -25,15 +21,15 @@ import "firebase/storage";
 import firebase from 'firebase/app';
 
 
-export default function Form({navigation}) {
+export default function Form({ navigation }) {
 
-  const [property, setProperty] = useState(null)
-  const [bedroom, setBedroom] = useState(null)
+  const [property, setProperty] = useState(null);
+  const [bedroom, setBedroom] = useState(null);
   const [date, setDate] = useState(new Date());
-  const [price, setPrice] = useState(null)
-  const [type, setType] = useState(null)
-  const [note, setNote] = useState(null)
-  const [name, setName] = useState(null)
+  const [price, setPrice] = useState();
+  const [type, setType] = useState(null);
+  const [note, setNote] = useState(null);
+  const [name, setName] = useState(null);
 
   const [data, setData] = useState([])
   ///OpenDate
@@ -74,7 +70,7 @@ export default function Form({navigation}) {
       firebase.initializeApp(firebaseConfig)
       console.log("\nFirebase connection successful!!!")
     }
-    GetData();
+    getData();
 
   }, [])
 
@@ -102,44 +98,55 @@ export default function Form({navigation}) {
     });
 
   }
-  const GetData = () => {
-    firebase.database().ref('users/').on('value', function (snapshot) {
-
-      let array = [];
-      snapshot.forEach(function (childSnapshot) {
-        var childData = childSnapshot.val();
-        array.push({
-          id: childSnapshot.key,
-          property: childData.property,
-          bedroom: childData.bedroom,
-          date: childData.date,
-          price: childData.price,
-          type: childData.type,
-          note: childData.note,
-          name: childData.name,
-
+  const getData = () => {
+    firebase
+      .database()
+      .ref('userDatas/')
+      .on('value', function (snapshot) {
+        let arrayDb = [];
+        snapshot.forEach(function (childSnapshot) {
+          var childData = childSnapshot.val();
+          arrayDb.push({
+            id: childSnapshot.key,
+            property: childData.Property,
+            bedroom: childData.Bedroom,
+            date: childData.Date,
+            price: childData.Price,
+            type: childData.Type,
+            note: childData.Note,
+            name: childData.Name,
+          });
         });
+        // console.log(arrayDb);
+
       });
-      // console.log(array)
-      setData(array)
 
-    });
-  }
-
-  //Delete
-  // function deleteDataBase(id) {
-  //   firebase.database().ref('users/' + id).remove()
-  //   alert("Delete Successfully!  !!!")
-  // }
-
+  };
 
 
   const saveData = () => {
+    const itemDb = data?.filter((itemDb) => {
+      if (
+        // itemDb.property !== property ||
+        // itemDb.bedroom !== bedroom ||
+        // itemDb.type !== type ||
+        itemDb.name !== name
+      ) {
+        return false;
 
+      }
+      else {
+        return true;
+
+      }
+    });
+
+
+    
 
     if (!property) {
+      alert(' Please enter Property field!!')
 
-      alert('Please enter Property field!')
     }
 
     else if (!bedroom) {
@@ -151,6 +158,11 @@ export default function Form({navigation}) {
 
       alert('Please enter Price field!')
     }
+    else if (price < 20) {
+
+      alert('Price field must be greater than or equal to 20')
+    }
+
     else if (!type) {
 
       alert('Please enter Type field!')
@@ -159,6 +171,9 @@ export default function Form({navigation}) {
 
       alert('Please enter Reporter Name field!')
     }
+    else if  (itemDb[0])
+      return Alert.alert('checkValidate', 'Thong tin da co trong DB');
+
     else {
       var value =
       {
@@ -183,7 +198,7 @@ export default function Form({navigation}) {
             text: "Confirm",
             onPress: () => {
               addDataBase(property, bedroom, date, price, type, note, name)
-
+              navigation.goBack("Home");
             },
 
           },
@@ -194,7 +209,7 @@ export default function Form({navigation}) {
     }
 
   }
-
+  ///////////////////////////
   return (
     <View style={styles.container}>
       <View style={styles.navBar}>
@@ -235,9 +250,9 @@ export default function Form({navigation}) {
             selectedValue={bedroom}
           >
             <Picker.Item label="__Select__" />
-            <Picker.Item label="One" value="Two" />
-            <Picker.Item label="Two" value="Three" />
-            <Picker.Item label="Three" value="Four" />
+            <Picker.Item label="One" value="One" />
+            <Picker.Item label="Two" value="Tow" />
+            <Picker.Item label="Three" value="Three" />
           </Picker>
         </View>
 
@@ -315,23 +330,13 @@ export default function Form({navigation}) {
         <TouchableOpacity style={styles.btn} onPress={() => {
           saveData()
         }}>
-          <Text > Submit</Text>
+          <Text style={{ fontSize: 20 }}> Submit</Text>
         </TouchableOpacity>
 
 
       </ScrollView>
 
 
-      <View
-        style={styles.statusbar}>
-        <Text style={{ color: '#F3F1F5' }}>Nguyen The Quy- GCD18687</Text>
-
-        <Button title='View Data'
-          style={styles.btn}
-          onPress={() => {
-            navigation.navigate('Detail')
-          }} />
-      </View>
     </View>
   );
 }
@@ -358,10 +363,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
   },
   btn: {
+    width: 120,
     backgroundColor: '#77ACF1',
     padding: 10,
     borderRadius: 10,
     alignSelf: 'center',
+    alignItems: 'center',
     marginTop: 30,
     marginBottom: 20,
   },
@@ -375,25 +382,13 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
 
   },
-  del: {
-    backgroundColor: '#77ACF1',
-    padding: 10,
-    borderRadius: 10,
-    alignSelf: 'center',
-    marginTop: 60,
-  },
+
 
   tx: {
 
     textDecorationColor: '#fff',
     marginStart: 20,
     marginTop: 10,
-  },
-  statusbar: {
-    height: 50,
-    backgroundColor: '#334756',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   navBar: {
     alignItems: 'center',

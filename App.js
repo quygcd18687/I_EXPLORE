@@ -1,42 +1,51 @@
 import React from 'react';
 import {
-  Button,
-  Image,
-  StyleSheet, Text, useColorScheme, View, ViewPagerAndroidBase,
+  Button,Image, ImageBackground,StyleSheet, 
+  Text, View, TouchableOpacity,
 } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import 'react-native-gesture-handler';
-import Form from './Screens/Form'
-import Detail from './Screens/Detail'
+import Form from './Screens/Form';
+import Detail from './Screens/Detail';
 
 
 const Stack = createNativeStackNavigator();
+
 function Home({ navigation }) {
 
   return (
+    <ImageBackground source={require('./assets/rentalBackground.jpg')} resizeMode="cover" style={styles.backImage}>
     <View style={styles.container}>
-      <Image style={styles.logo}
-        source={require('./assets/HomeLogo.png')}
-      />
-      <View style={styles.V_button}>
-        <Button title='Go to Form'
-          style={styles.btn}
-          onPress={() => {
-            navigation.navigate('Form')
-          }} />
+      
+      
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 200, }}>
+        <View style={styles.V_button}>
+        <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Form')
+            }}
+            style={styles.btn}
+          >
+            <Text style={{fontSize: 20, color: '#FEFBF3'}}>Create from</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.V_button}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Detail')
+            }}
+            style={styles.btn}
+          >
+            <Text style={{fontSize: 20, color: '#FEFBF3'}}>Detail datas</Text>
+          </TouchableOpacity>
+
+        </View>
       </View>
 
-      {/* <View style={styles.V_button}>
-        <Button title='View Data'
-          style={styles.btn}
-          onPress={() => {
-            navigation.navigate('Detail')
-          }}
-        />
-      </View> */}
-
     </View>
+    </ImageBackground>
   );
 }
 const App = () => {
@@ -58,27 +67,28 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: 'center',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+
 
   },
   btn: {
-    fontSize: 24,
-    margin: 20,
-
+    height: 40,
+    width: 120,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#5C527F'
   },
   V_button: {
     padding: 15,
     width: 150,
     justifyContent: 'center',
-    marginTop: 20,
-    fontSize: 30,
-    fontWeight: '400',
-
   },
-  logo: {
-    width: 300,
-    height: 300,
-  },
+  backImage:{
+    flex: 1,
+    justifyContent: "center",
+    
+  }
 
 });
 
