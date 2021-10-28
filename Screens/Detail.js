@@ -4,30 +4,21 @@ import {
 } from 'react-native';
 import 'react-native-gesture-handler';
 
+
 import "firebase/auth";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/functions";
 import "firebase/storage";
 import firebase from 'firebase/app';
-
-
+import firebaseConfig from '../firebase';
 
 const Detail = () => {
 
     const [item, setItem] = useState();
 
     useEffect(() => {
-        const firebaseConfig = {
-            apiKey: "AIzaSyB10pcZBngk_gEyVJ4Pn-anCmMnKsq5zJw",
-            authDomain: "rentalz-59131.firebaseapp.com",
-            databaseURL: "https://rentalz-59131-default-rtdb.firebaseio.com",
-            projectId: "rentalz-59131",
-            storageBucket: "rentalz-59131.appspot.com",
-            messagingSenderId: "784254174104",
-            appId: "1:784254174104:web:b448deccd4ef3058c6e1ed",
-            measurementId: "G-K6SYRSYD26"
-        };
+        
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig)
         }
@@ -81,11 +72,11 @@ const Detail = () => {
           }
         });
     
-      }
+      };
     function deleteDB(id) {
         firebase.database().ref('userDatas/' + id).remove()
-        alert("Xóa thành công !!!")
-    }
+        alert('Delete Successfully !!!');
+    };
 
     const ViewData = () => {
         return item?.map((item, index) => {
@@ -107,8 +98,8 @@ const Detail = () => {
                     >
                         <Text>Update</Text>
                     </TouchableOpacity> */}
-                    <TouchableOpacity
-                        style={styles.deteleBtn}
+                     <TouchableOpacity
+                        style={styles.deteleBtn} 
                         onPress={()=>{
                             deleteDB(item.id)
                         }}
@@ -116,8 +107,6 @@ const Detail = () => {
                         <Text>Delete</Text>
                     </TouchableOpacity>
                     </View>
-                   
-
                 </View>
 
             );
