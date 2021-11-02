@@ -27,7 +27,7 @@ function Home({ navigation }) {
             }}
             style={styles.btn}
           >
-            <Text style={{fontSize: 20, color: '#FEFBF3'}}>Create from</Text>
+            <Text style={{fontSize: 20, color: '#FEFBF3'}}>Create form</Text>
           </TouchableOpacity>
         </View>
 

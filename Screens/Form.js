@@ -118,19 +118,20 @@ export default function Form({ navigation }) {
             name: childData.Name,
           });
         });
-        // console.log(arrayDb);
+        console.log(arrayDb);
+        setData(arrayDb);
 
       });
 
   };
-
+  
 
   const saveData = () => {
     const itemDb = data?.filter((itemDb) => {
       if (
-        // itemDb.property !== property ||
-        // itemDb.bedroom !== bedroom ||
-        // itemDb.type !== type ||
+        itemDb.property !== property ||
+        itemDb.bedroom !== bedroom ||
+        itemDb.type !== type ||
         itemDb.name !== name
       ) {
         return false;
@@ -143,7 +144,7 @@ export default function Form({ navigation }) {
     });
 
 
-    
+
 
     if (!property) {
       alert(' Please enter Property field!!')
@@ -172,8 +173,8 @@ export default function Form({ navigation }) {
 
       alert('Please enter Reporter Name field!')
     }
-    else if  (itemDb[0])
-      return Alert.alert('checkValidate', 'Thong tin da co trong DB');
+    else if (itemDb[0])
+      return Alert.alert('checkValidate', 'Information already in Database');
 
     else {
       var value =
@@ -252,7 +253,7 @@ export default function Form({ navigation }) {
           >
             <Picker.Item label="__Select__" />
             <Picker.Item label="One" value="One" />
-            <Picker.Item label="Two" value="Tow" />
+            <Picker.Item label="Two" value="Two" />
             <Picker.Item label="Three" value="Three" />
           </Picker>
         </View>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-    StyleSheet, Text, View, TouchableOpacity, ScrollView
+    StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert
 } from 'react-native';
 import 'react-native-gesture-handler';
 
@@ -13,12 +13,13 @@ import "firebase/storage";
 import firebase from 'firebase/app';
 import firebaseConfig from '../firebase';
 
+
 const Detail = () => {
 
     const [item, setItem] = useState();
 
     useEffect(() => {
-        
+
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig)
         }
@@ -50,33 +51,48 @@ const Detail = () => {
             });
 
     };
-    function updateDB(id,property, bedroom, date, price, type, note, name) {
+    // function updateDataBase(id, property, bedroom, date, price, type, note, name) {
+    //     firebase.database().ref('users/' + id).set({
 
-        firebase.database().ref('userDatas/'+ id).push().set({
-          Property: property,
-          Bedroom: bedroom,
-          Date: new Date(date).toDateString(),
-          Price: price,
-          Type: type,
-          Note: note,
-          Name: name,
-        }, function (error) {
-          if (error) {
-    
-            alert('Update fail!')
-          }
-    
-    
-          else {
-            alert('Update Successfully!')
-          }
-        });
-    
-      };
+    //         Property: property,
+    //         Bedroom: bedroom,
+    //         Date: new Date(date).toDateString(),
+    //         Price: price,
+    //         Type: type,
+    //         Note: note,
+    //         Name: name
+    //     },  function (error) {
+    //         if (error) {
+
+    //           alert('Update fail!')
+    //         }
+
+
+    //         else {
+    //           alert('Update Successfully!')
+    //         }
+    //     });
+
+    //   };
+
     function deleteDB(id) {
-        firebase.database().ref('userDatas/' + id).remove()
-        alert('Delete Successfully !!!');
+        Alert.alert('Delete', 'Do you want to delete? ',
+            [
+                {
+                    text: "No",
+                    style: "cancel",
+                },
+                {
+                    text: "Delete",
+                    onPress: () => firebase.database().ref('userDatas/' + id).remove()
+                        + alert('Delete Successfully!!')
+
+                },
+            ]
+        )
     };
+
+
 
     const ViewData = () => {
         return item?.map((item, index) => {
@@ -90,22 +106,22 @@ const Detail = () => {
                     <Text style={styles.fieldText}>Notes: {item.note}</Text>
                     <Text style={styles.fieldText}>Reporter name: {item.name}</Text>
                     <View style={styles.functionRow}>
-                         {/* <TouchableOpacity
-                        style={styles.updateBtn}
-                        onPress={()=>{
-                            updateDB(item.id)
-                        }}
-                    >
-                        <Text>Update</Text>
-                    </TouchableOpacity> */}
-                     <TouchableOpacity
-                        style={styles.deteleBtn} 
-                        onPress={()=>{
-                            deleteDB(item.id)
-                        }}
-                    >
-                        <Text>Delete</Text>
-                    </TouchableOpacity>
+                        {/* <TouchableOpacity
+                            style={styles.updateBtn}
+                            onPress={() => {
+                                updateDataBase(item.id)
+                            }}
+                        >
+                            <Text>Update</Text>
+                        </TouchableOpacity> */}
+                        <TouchableOpacity
+                            style={styles.deteleBtn}
+                            onPress={() => {
+                                deleteDB(item.id)
+                            }}
+                        >
+                            <Text>Delete</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
 
@@ -143,23 +159,23 @@ const styles = StyleSheet.create({
         marginStart: 10
 
     },
-    functionRow:{
+    functionRow: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent:'center'
+        justifyContent: 'center'
     },
-    deteleBtn:{
+    deteleBtn: {
         width: 65,
         padding: 10,
         borderRadius: 30,
-        borderWidth:1,
+        borderWidth: 1,
         margin: 20
     },
-    updateBtn:{
+    updateBtn: {
         width: 70,
         padding: 10,
         borderRadius: 30,
-        borderWidth:1,
+        borderWidth: 1,
         margin: 20
     }
 
