@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   StyleSheet,
-  Text, View, TouchableOpacity, ScrollView
+  Text, View, TouchableOpacity
 } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,14 +16,18 @@ const Stack = createNativeStackNavigator();
 
 function Home({ navigation }) {
 
+
   return (
     <View style={styles.container}>
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.btn} onPress={() => { navigation.navigate('Form') }}>
-          <Text style={{ fontSize: 18, color: '#FEFBF3' }}>Create</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Form")}
+          style={styles.createBtn}>
+          <Text style={{ fontSize: 30, textAlign: 'center' }}
+          >+</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => { navigation.navigate('Detail') }}>
-          <Text style={{ fontSize: 18, color: '#FEFBF3' }}>Detail</Text>
+        <TouchableOpacity style={styles.detailBtn} onPress={() => { navigation.navigate('Detail') }}>
+          <Text style={{ fontSize: 18,  }}>more</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.ViewData}>
@@ -36,7 +40,6 @@ const App = () => {
 
   return (
     <NavigationContainer>
-
       <Stack.Navigator initialRouteName='Home'>
         <Stack.Screen name="I-Explore" component={Home} />
         <Stack.Screen name="Form" component={Form} />
@@ -51,29 +54,38 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-
+    backgroundColor: '#DFDFDE'
   },
   navbar: {
     flexDirection: "row",
     flexWrap: "wrap",
     width: "100%",
-    height: 50,
-  },
-  btn: {
-    height: '80%',
-    width: '20%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#5C527F',
-    marginTop: 40,
-    marginLeft: 20,
-    borderRadius: 10,
+    height: '10%'
   },
   ViewData: {
-    marginTop: 50
+    marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  createBtn: {
+    width: 50,
+    height: 50,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#22577E',
+    margin: 30,
+    marginRight: 100
+  },
+  detailBtn: {
+    width: 50,
+    height: 50,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#22577E',
+    marginTop: 30,
+    marginLeft: 100,
   }
 });
 

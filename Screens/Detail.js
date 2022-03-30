@@ -3,7 +3,7 @@ import {
     StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert
 } from 'react-native';
 import 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native'
+
 
 
 
@@ -19,7 +19,6 @@ import firebaseConfig from '../firebase';
 const Detail = () => {
 
     const [data, setData] = useState();
-    const navigation = useNavigation();
 
     useEffect(() => {
 
@@ -28,44 +27,6 @@ const Detail = () => {
         }
         getData();
     }, [])
-
-    useEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <TouchableOpacity onPress={() => navigation.navigate("Form")} style={{
-                    backgroundColor: 'purple',
-                    width: 40,
-                    height: 40,
-                    borderRadius: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <Text style={{
-                        fontSize: 30,
-                        textAlign: 'center',
-                        color: "#ddd",
-                        marginBottom: 3
-                    }}
-                    >+</Text>
-                </TouchableOpacity>
-
-            ),
-            headerSearchBarOptions: {
-                placeholder: 'Activity',
-                onChangeText: (e) => {
-                    searchFilterFunction(e.nativeEvent.text);
-                },
-            }
-        })
-
-    }, [navigation])
-
-
-    const searchFilterFunction = (text) => {
-        setData({
-
-        })
-    }
 
     const getData = () => {
         firebase
@@ -111,7 +72,7 @@ const Detail = () => {
 
     };
 
-    const ViewData = () => {
+    const ViewData = (text) => {
         return data?.map((item, index) => {
             return (
                 <View key={index} style={styles.itemBb}>
@@ -139,11 +100,11 @@ const Detail = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <ScrollView style={styles.viewItem}>
-                <View>{ViewData()}</View>
-            </ScrollView>
-        </View>
+
+        <ScrollView style={styles.viewItem}>
+            <View>{ViewData()}</View>
+        </ScrollView>
+
     );
 };
 
