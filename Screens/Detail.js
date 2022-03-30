@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-    StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert
+    StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert, Line
 } from 'react-native';
 import 'react-native-gesture-handler';
 
@@ -89,7 +89,7 @@ const Detail = () => {
                                 deleteDB(item.id)
                             }}
                         >
-                            <Text>Delete</Text>
+                            <Text style={{ textAlign: "center", fontSize: 20 }}>Delete</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -123,8 +123,8 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     fieldText: {
-        fontSize: 20,
-        marginStart: 40
+        fontSize: 16,
+        margin: 5,
 
     },
     functionRow: {
@@ -133,10 +133,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     deteleBtn: {
-        width: 65,
+        width: "100%",
         padding: 10,
-        borderWidth: 1,
-        margin: 20
+        marginTop: 20,
+        
     },
 
 });
