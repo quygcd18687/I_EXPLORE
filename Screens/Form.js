@@ -309,11 +309,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     rowInput: {
-        margin: 20
+        marginBottom: 10
     },
     tx: {
         fontSize: 16,
-        margin: 15
+        marginBottom: 15
     },
     textAreaInput: {
         width: 100
